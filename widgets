@@ -1,0 +1,23 @@
+// Register widget 
+function vc_widgets_init() {
+	
+	register_sidebar( array(
+		'name'          => __( 'Top Left Sidebar', 'abrar' ),
+		'id'            => 'top-left-sidebar',
+		'description'   => __( 'Appears on the top left.', 'abrar' ),
+		'before_widget' => '<div class="top_search_form">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	) );
+	register_sidebar( array(
+		'name'          => __( 'Top Right Sidebar', 'abrar' ),
+		'id'            => 'top-right-sidebar',
+		'description'   => __( 'Appears in the top right.', 'abrar' ),
+		'before_widget' => '<div class="top_register_link">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	) );
+}
+add_action( 'widgets_init', 'vc_widgets_init' );
