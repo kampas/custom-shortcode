@@ -1,0 +1,41 @@
+// Case study shortcode
+function selected_casestudy($atts, $content = null) {
+	extract(shortcode_atts(array(
+		'type' => 'case_study',
+		'count' => 3,
+		'order' => 'ASC',
+		'orderby' => 'title',
+	), $atts));
+
+	$return_string = '<div class="casestudy_home">';
+		
+	$q = new WP_Query( array(
+		'post_type' => $type,
+		'posts_per_page' => $count,
+		'order' => $order,
+		'orderby' => $orderby,
+	) );
+	$divcounter = 1;
+	$last = ' last';
+	if ( $q->have_posts() ) :
+		while ( $q->have_posts() ) : $q->the_post();
+			if( $divcounter % 3 == 0 ){ 
+				$last = ' last';
+			}
+			else{
+				$last = '';
+			}
+			$return_string .= '<div class="casestudy_home_item one_third' . $last . '">';
+			$case_study_img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );	
+			$return_string .= '<img src="' . $case_study_img[0] . '" alt="' . get_the_title() . '">';
+			$return_string .= '<h4><a href="'.get_permalink().'">'.get_the_title().'</a></h4>';
+			$return_string .= '</div>';
+			$divcounter++;
+		endwhile;
+	endif;
+	$return_string .= '</div>';
+
+	wp_reset_postdata();
+	return $return_string;
+}
+add_shortcode('selected_casestudy', 'selected_casestudy');
